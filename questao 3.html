@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Contato com validacao</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6e6e6;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 7px;
+            margin-bottom: 14px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #dba22e;
+            color: white;
+            padding: 9px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        button:hover {
+            background-color: black;
+        }
+
+        .mensagem {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+            display: none; 
+        }
+
+        .erro {
+            color: white;
+            background-color: #ff4444;
+            display: block;
+        }
+
+        .sucesso {
+            color: white;
+            background-color: #4444ff;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ticket para reportar erros ou tirar Dúvidas</h2>
+
+    <form id="formContato">
+        <label for="nome">Nome:</label>
+        <input type="text" placeholder="Digite seu nome" id="nome" name="nome">
+
+        <label for="email">E-mail:</label>
+        <input type="email" placeholder="Digite seu email" id="email" name="email"> 
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" placeholder="Digite sua mensagem" name="mensagem" rows="5"></textarea>
+
+        <button type="submit">Enviar</button>
+
+        <div class="mensagem" id="retorno"></div>
+    </form>
+
+    <script>
+        const form = document.getElementById('formContato');
+        const retorno = document.getElementById('retorno');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let nome = document.getElementById('nome').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let mensagem = document.getElementById('mensagem').value.trim();
+            
+            
+            let emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!nome || !email || !mensagem) {
+                retorno.textContent = "Preencha todos os campos!";
+                retorno.className = "mensagem erro";
+            } 
+            else if (!emailOk.test(email)) {
+                retorno.textContent = "Email inválido!";
+                retorno.className = "mensagem erro";
+            } 
+            else {
+                retorno.textContent = "Mensagem enviada com Sucesso";
+                retorno.className = "mensagem sucesso";
+                form.reset(); 
+            }
+        });
+    </script>
+
+</body>
+</html>
